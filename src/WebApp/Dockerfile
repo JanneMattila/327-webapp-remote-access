@@ -13,8 +13,11 @@ RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends openssh-server && \
     echo "root:Docker!" | chpasswd
 
+RUN sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
+
 # SSH Configuration
 COPY sshd_config /etc/ssh/
+RUN mkdir -p /var/run/sshd
 RUN /usr/sbin/sshd
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
