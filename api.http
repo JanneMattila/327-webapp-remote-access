@@ -1,0 +1,11 @@
+@endpoint = http://localhost:32771
+
+### Get files
+POST {{endpoint}}/api/files HTTP/1.1
+Content-Type: application/json
+
+{
+    "path": "/home",
+    "recursive": true,
+    "filter": "*"
+}
