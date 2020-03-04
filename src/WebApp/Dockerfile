@@ -32,7 +32,7 @@ FROM base AS final
 WORKDIR /app
 
 # SSH Configuration
-COPY ../../sshd_config /etc/ssh/
+COPY sshd_config /etc/ssh/
 
 # Copy content from Build image
 COPY --from=publish /app/publish .
