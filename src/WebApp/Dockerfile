@@ -7,7 +7,10 @@ EXPOSE 80
 EXPOSE 443
 EXPOSE 2222
 
-RUN apt-get install -y openssh-server && echo "root:Docker!" | chpasswd
+RUN apt-get update -qq && \
+    apt-get dist-upgrade --no-install-recommends -y && \
+    apt-get install -y --no-install-recommends openssh-server && \
+    echo "root:Docker!" | chpasswd
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
