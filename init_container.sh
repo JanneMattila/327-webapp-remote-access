@@ -6,7 +6,11 @@
 eval $(printenv | sed -n "s/^\([^=]\+\)=\(.*\)$/export \1=\2/p" | sed 's/"/\\\"/g' | sed '/=/s//="/' | sed 's/$/"/' >> /etc/profile)
 
 # Starting sshd process
+echo Modifying ssh server configuration with: $SSH_PORT
 sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
+cat /etc/ssh/sshd_config
+
+echo Start sshd
 /usr/sbin/sshd
 
 # Run the main application

@@ -10,6 +10,12 @@
 
 Containerized web app that has SSH configuration done so that you can remote to it from Azure App Service.
 
+How to connect: 
+
+```bash
+az webapp create-remote-connection -g $resourceGroup -n $app -p 9000
+```
+
 ## Links
 
 [SSH support for Azure App Service on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/app-service-linux-ssh-support)

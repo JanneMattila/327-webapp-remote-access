@@ -18,6 +18,7 @@ COPY init_container.sh /bin/
 RUN chmod 755 /bin/init_container.sh
 
 COPY sshd_config /etc/ssh/
+RUN mkdir -p /var/run/sshd
 # <-SSH Configuration
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
