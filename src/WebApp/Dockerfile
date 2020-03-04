@@ -13,7 +13,7 @@ RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends openssh-server && \
     echo "root:Docker!" | chpasswd
 
-RUN sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
+RUN sed -i "s/SSH_PORT/2222/g" /etc/ssh/sshd_config
 
 # SSH Configuration
 COPY sshd_config /etc/ssh/
