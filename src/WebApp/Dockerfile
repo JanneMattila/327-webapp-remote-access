@@ -5,13 +5,17 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
+
 EXPOSE 2222
 ENV SSH_PORT 2222
-
 RUN apt-get update -qq && \
     apt-get dist-upgrade --no-install-recommends -y && \
     apt-get install -y --no-install-recommends openssh-server && \
     echo "root:Docker!" | chpasswd
+
+# SSH Configuration
+COPY sshd_config /etc/ssh/
+RUN /usr/sbin/sshd
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
@@ -31,9 +35,6 @@ RUN dotnet publish "WebApp.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
-
-# SSH Configuration
-COPY sshd_config /etc/ssh/
 
 # Copy content from Build image
 COPY --from=publish /app/publish .
