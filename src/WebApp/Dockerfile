@@ -7,13 +7,10 @@ EXPOSE 80
 EXPOSE 443
 
 EXPOSE 2222
-ENV SSH_PORT 2222
 RUN apt-get update -qq && \
     apt-get dist-upgrade --no-install-recommends -y && \
     apt-get install -y --no-install-recommends openssh-server && \
     echo "root:Docker!" | chpasswd
-
-RUN sed -i "s/SSH_PORT/2222/g" /etc/ssh/sshd_config
 
 # SSH Configuration
 COPY sshd_config /etc/ssh/
