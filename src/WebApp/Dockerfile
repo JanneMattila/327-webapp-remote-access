@@ -6,16 +6,19 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+# SSH Configuration->
 EXPOSE 2222
+ENV SSH_PORT 2222
 RUN apt-get update -qq && \
     apt-get dist-upgrade --no-install-recommends -y && \
     apt-get install -y --no-install-recommends openssh-server && \
     echo "root:Docker!" | chpasswd
 
-# SSH Configuration
+COPY init_container.sh /bin/
+RUN chmod 755 /bin/init_container.sh
+
 COPY sshd_config /etc/ssh/
-RUN mkdir -p /var/run/sshd
-RUN /usr/sbin/sshd
+# <-SSH Configuration
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
@@ -38,4 +41,4 @@ WORKDIR /app
 
 # Copy content from Build image
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WebApp.dll"]
+ENTRYPOINT ["/bin/init_container.sh", "dotnet", "WebApp.dll"]
