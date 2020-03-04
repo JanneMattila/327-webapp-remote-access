@@ -6,6 +6,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 EXPOSE 2222
+ENV SSH_PORT 2222
 
 RUN apt-get update -qq && \
     apt-get dist-upgrade --no-install-recommends -y && \
