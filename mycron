@@ -1,2 +1,2 @@
-* * * * * bash -c "date > /app/wwwroot/cron.txt"
+* * * * * root bash -c "date > /app/wwwroot/cron.txt"
 
