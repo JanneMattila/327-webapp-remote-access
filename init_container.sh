@@ -19,13 +19,13 @@ cat /etc/motd
 # Get environment variables to show up in SSH session
 eval $(printenv | sed -n "s/^\([^=]\+\)=\(.*\)$/export \1=\2/p" | sed 's/"/\\\"/g' | sed '/=/s//="/' | sed 's/$/"/' >> /etc/profile)
 
+echo Start CRON
+service cron start
+
 # Starting sshd process
 echo Modifying ssh server configuration with: $SSH_PORT
 sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
 cat /etc/ssh/sshd_config
-
-echo Start CRON
-service cron start
 
 echo Start sshd
 service ssh start
