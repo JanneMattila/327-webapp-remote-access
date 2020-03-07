@@ -10,8 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{7E9AF29F-12C
 		.gitignore = .gitignore
 		api.http = api.http
 		azure-pipelines.yml = azure-pipelines.yml
-		cron.sh = cron.sh
 		init_container.sh = init_container.sh
+		mycron = mycron
 		README.md = README.md
 		sshd_config = sshd_config
 	EndProjectSection
