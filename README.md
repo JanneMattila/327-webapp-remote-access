@@ -8,17 +8,22 @@
 
 ## Introduction
 
-Containerized web app that has SSH configuration done so that you can remote to it from Azure App Service.
+Containerized web app running in Azure App Service configured
+so that you can remote to it using SSH.
 
 You can connect via Web SSH Console e.g. 
 _https://yoursitenamehere.scm.azurewebsites.net/webssh/host_
-or using `az` CLI:
+
+Or using `az` CLI:
 
 ```bash
-az webapp create-remote-connection -g $resourceGroup -n $app -p 9000
+# Create tunnel
+az webapp create-remote-connection --name $appSvcName --resource-group $resourceGroup --port 9000
+# Connect via tunnel
+ssh root@localhost -p 9000
 ```
 
-## Summary of changes to enable SSH
+## Summary of changes to enable SSH in your custom container
 
 Inside your `dockerfile` do [these changes](https://github.com/JanneMattila/327-webapp-remote-access/blob/master/src/WebApp/Dockerfile#L9-L22):
 
@@ -54,6 +59,43 @@ ENTRYPOINT ["/bin/init_container.sh", "dotnet", "WebApp.dll"]
 # Run the main application
 $@
 ```
+
+### How to deploy to App Service
+
+Deploy published image to the Azure CLI way:
+
+```batch
+# Variables
+appSvcName="mywebappremoteaccessdemo"
+appSvcPlanName="webAppPlan"
+resourceGroup="rg-webappremote-dev"
+location="westeurope"
+image="jannemattila/webapp-remote-access"
+
+# Login to Azure
+az login
+
+# *Explicitly* select your working context
+az account set --subscription <YourSubscriptionName>
+
+# Create new resource group
+az group create --name $resourceGroup --location $location
+
+# Create App Service Plan
+az appservice plan create --name $appSvcPlanName --resource-group $resourceGroup --is-linux --sku B1
+
+# Create App Service
+az webapp create --name $appSvcName --plan $appSvcPlanName --deployment-container-image-name $image --resource-group $resourceGroup
+
+# Create SSH tunnel
+az webapp create-remote-connection --name $appSvcName --resource-group $resourceGroup --port 9000
+
+# Now you can connect via your SSH client using the tunnel
+ssh root@localhost -p 9000
+
+# Wipe out the resources
+az group delete --name $resourceGroup -y
+``` 
 
 ## Links
 
