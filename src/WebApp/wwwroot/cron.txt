@@ -1,1 +1,1 @@
-﻿Placeholder (cron will update this file hourly)
+﻿Placeholder (cron will update this file per minute)
