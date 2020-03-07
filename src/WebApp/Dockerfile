@@ -24,7 +24,7 @@ RUN mkdir -p /var/run/sshd
 # CRON Configuration->
 RUN apt-get install -y --no-install-recommends cron
 COPY mycron /etc/cron.hourly
-RUN chmod 755 /etc/cron.hourly/mycron
+RUN chmod 0644 /etc/cron.hourly/mycron
 # <-CRON Configuration
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
