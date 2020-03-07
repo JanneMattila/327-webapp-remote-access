@@ -70,7 +70,7 @@ appSvcName="mywebappremoteaccessdemo"
 appSvcPlanName="webAppPlan"
 resourceGroup="rg-webappremote-dev"
 location="westeurope"
-image="jannemattila/webapp-remote-access"
+image="jannemattila/webapp-remote-access:1.0.14"
 
 # Login to Azure
 az login

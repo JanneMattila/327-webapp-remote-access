@@ -21,6 +21,12 @@ COPY sshd_config /etc/ssh/
 RUN mkdir -p /var/run/sshd
 # <-SSH Configuration
 
+# CRON Configuration->
+RUN apt-get install -y --no-install-recommends cron
+COPY cron.sh /etc/cron.d
+RUN chmod 755 /etc/cron.d/cron.sh
+# <-CRON Configuration
+
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 
