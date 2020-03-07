@@ -24,8 +24,11 @@ echo Modifying ssh server configuration with: $SSH_PORT
 sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
 cat /etc/ssh/sshd_config
 
+echo Start CRON
+service cron start
+
 echo Start sshd
-/usr/sbin/sshd
+service ssh start
 
 # Run the main application
 $@
